@@ -9,13 +9,15 @@ Nuclic acid modelling including xeno-nucleotide is a tool made to make the proce
 
 
 ## Tested versions
-The code is tested on python version 3.10.2,3.14.3
-The code uses numpy and have been tested on version 2.1.1
-The trace_pattern.pl code uses perl and have been tested with version 5.34.0
-
 The code have been tested on the following operation systems:
- Windows 11
- Ubuntu 22.04.3 LTS
+Ubuntu 22.04.3 LTS
+  python 3.10.2
+  numpy 2.1.1
+  perl 5.34.0
+Windows 11 26200.8037
+  pyhton 3.14.3
+  numpy 2.4.4
+ 
 
 ## Installation
 
@@ -33,12 +35,16 @@ Add the follwing to your .bashrc file or the equilant for other shells.
  export PATH="path_to_namix_folder:$PATH"
 ```
 ### Windows
-Edit the system enveriment variables to add the NAMIX folder to PATH
+"Edit the system enveriment variables" to add the NAMIX folder to PATH
 
 ### If using ROAD style blueprint
 If you want to use ROAD style blueprints for the generation of base paring restraints. you need to have perl install in addtion to python, as the code for convereting the blueprint to dot-barcket format, is taken from the [ROAD](https://github.com/esa-lab/ROAD) repository.
 
 ## Usage
+NAMIX only works on the legacy .PDB file format not the new .cif
+
+To use NAMIX, data does not need to bee located in the namix folder. Your working dirctory in the terminal neeed to be the data folder.
+
 NAMIX can be called by just writting the following:
 
 ```bash
