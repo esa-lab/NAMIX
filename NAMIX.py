@@ -131,6 +131,9 @@ def rev_namix(pdbfile:str): # does not work with add mod like LCA rigth now
                 if not mod_dict[line[17:20].strip()].removal_set and mod_dict[line[17:20].strip()].have_sugar_additions:
                     for i in mod_dict[line[17:20].strip()].new_atoms_sugar:
                         mod_dict[line[17:20].strip()].add_replacement(i,None)
+                if not mod_dict[line[17:20].strip()].removal_set and mod_dict[line[17:20].strip()].have_base_additions:
+                                    for i in mod_dict[line[17:20].strip()].new_atoms_base:
+                                        mod_dict[line[17:20].strip()].add_replacement(i,None)
                 simple_replace_module({"A":line},mod_dict[line[17:20].strip()],atom_nr,out)
             else:
                 if not line.startswith("SEQRES") and not line.startswith("LINK"):
