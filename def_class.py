@@ -18,7 +18,10 @@ class Wrong_Base_Error(Exception): # exception for if modification is not for th
 
 
 class modnuc: # overall class for modified nucleotide
-    
+
+    canonical_atoms = ["P","O1P","O2P","O5'","C5'","C4'","O4'","C3'","O3'","C2'","O2'","C1'","N1","C2","N3","C4","C5","C6","O2","N4","O4","O6","N7","C8","N9","N2"]
+
+
     def id_atom_fixer(self, atom:str): # code for spitting the given replacement into the parts need to properly use them for pdb file generation
         atom = re.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)",atom)
         return atom
@@ -31,7 +34,8 @@ class modnuc: # overall class for modified nucleotide
         self.type = type
         
         
-        self.have_additions = False
+        self.have_base_additions = False
+        self.have_sugar_additions = False
         self.replacements = []
         self.removal_steps = []
         self.have_replacements = False
@@ -40,6 +44,7 @@ class modnuc: # overall class for modified nucleotide
         self.description  = description
         self.addtion_index = {}
         self.inverted  = False
+        self.removal_set = False
 
         self.calculated_vector = False
         self.mods = []
@@ -48,9 +53,11 @@ class modnuc: # overall class for modified nucleotide
                 self.add_replacement(i[0],i[1])
         
         if add_sugar:
+            self.have_sugar_additions = True
             self.add_sugar(add_sugar)
         
         if add_base:
+            self.have_base_additions = True
             self.add_base(add_base)
 
 
@@ -75,6 +82,8 @@ class modnuc: # overall class for modified nucleotide
     def add_sugar(self,add_sugar):
         self.core_sugar = add_sugar[0]
         self.additions_sugar = add_sugar[1]
+        self.new_atoms_sugar = set(self.additions_sugar).difference(set(self.canonical_atoms))
+        
         for i in range(len(add_sugar[1])):
             self.addtion_index[add_sugar[1][i]] = i
 
@@ -85,6 +94,7 @@ class modnuc: # overall class for modified nucleotide
     def add_base(self,add_base):
         self.core_base = add_base[0]
         self.additions_base = add_base[1]
+        self.new_atoms_base = set(self.additions_base).difference(set(self.canonical_atoms))
         for i in range(len(add_base[1])):
             self.addtion_index[add_base[1][i]] = i
         self.core_coord_base = np.empty(shape = (len(add_base[0]),3))
