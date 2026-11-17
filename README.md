@@ -1,86 +1,129 @@
 # NAMiX
-Nuclic acid modelling including xeno-nucleotide is a tool made to make the process of building and refiment of heavly modifed neclic acids stctures into strucule maps.
+
+Nucleic acid modelling, including xeno-nucleotides, is a tool designed to simplify the preparation, building, and refinement of heavily modified nucleic acid structures for use with cryo-EM and X-ray structural maps.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 
+## Tested Versions
 
-## Tested versions
-The code have been tested on the following operation systems:
-Ubuntu 22.04.3 LTS
-  python 3.10.2
-  numpy 2.1.1
-  perl 5.34.0
-Windows 11 26200.8037
-  pyhton 3.14.3
-  numpy 2.4.4
- 
+The code has been tested on the following systems:
+
+### Ubuntu 22.04.3 LTS
+- Python 3.10.2
+- NumPy 2.1.1
+- Perl 5.34.0
+
+### Windows 11 (26200.8037)
+- Python 3.14.3
+- NumPy 2.4.4
 
 ## Installation
 
-Download the code from github or clone the git repository into the wanted location.
+Download the code from GitHub or clone the repository into your desired location.
+
 ```bash
- git clone https://github.com/esa-lab/NAMiX.git
+git clone https://github.com/esa-lab/NAMiX.git
 ```
 
-After this add the NAMIX folder to your PATH
-Adding NAMIX to PATH is need as the code is intened to operrate in the folder with the data so it need to be assasiable from any directory/folder.
+Add the NAMIX folder to your `PATH`.
 
-### Linux:
-Add the follwing to your .bashrc file or the equilant for other shells.
+NAMIX is intended to be run from the directory containing your structure files and maps. Adding the installation directory to your `PATH` allows the program to be called from any working directory.
+
+### Linux
+
+Add the following line to your `.bashrc` file (or the equivalent configuration file for your shell):
+
 ```bash
- export PATH="path_to_namix_folder:$PATH"
+export PATH="path_to_namix_folder:$PATH"
 ```
+
 ### Windows
-"Edit the system enveriment variables" to add the NAMIX folder to PATH
 
-### If using ROAD style blueprint
-If you want to use ROAD style blueprints for the generation of base paring restraints. you need to have perl install in addtion to python, as the code for convereting the blueprint to dot-barcket format, is taken from the [ROAD](https://github.com/esa-lab/ROAD) repository.
+Open **"Edit the system environment variables"** and add the NAMIX folder to the `PATH` variable.
+
+### Using ROAD-style blueprints
+
+If you want to use ROAD-style blueprints for generating base-pair restraints, Perl must be installed in addition to Python. The blueprint-to-dot-bracket conversion code is adapted from the [ROAD](https://github.com/esa-lab/ROAD) repository.
 
 ## Usage
-NAMIX only works on the legacy .PDB file format not the new .cif
 
-To use NAMIX, data does not need to bee located in the namix folder. Your working dirctory in the terminal neeed to be the data folder.
+NAMIX currently supports the legacy `.PDB` format and does not support the newer `.cif` format.
 
-NAMIX can be called by just writting the following:
+Your data files do not need to be located in the NAMIX installation directory. However, your terminal working directory should be the directory containing the data being processed.
+
+Run NAMIX using:
 
 ```bash
 namix -f [filename] [options]
 ```
-use the following to get the following list of options.
+
+To display all available options:
+
 ```bash
 namix -h
 ```
 
-The -f [filename] is the only part that is mandatory
+The `-f [filename]` argument is the only mandatory parameter.
 
-For a list of options see below
--r [file]: .pb from chimira to gennerete basepair restrains for use in phenix with .eff file. \
--b [file]: make file for restrints based on ROAD blueprint for use in phenix with .eff file.
-                  
--p [prefix]: for giving files prefixes and folder suffix
+### Options
 
--o: for overwrite folder content with same name.\
--v: return mod nuc stucture to RNA.\
--m: Make NAMiX output only the modded pdb file and restrint if given.\
+```text
+-r [file]   Use a Chimera .pb file to generate base-pair restraints
+            for use with a Phenix .eff file.
 
-Mods are in the format "-[base to replace see below] [modifcation_3_lettercode,resid,resid....]"\
-if no res ID is given all bases of the type will be replaced                  
-                  
- -a [modifcaiton,resids]: set modifcation for adenine\
- -c [modifcaiton,resids]: set modifcation for cytosine\
- -g [modifcaiton,resids]: set modifcation for guanine\
- -u [modifcaiton,resids]: set modifcation for uracil\
- -t [modifcaiton,resids]: set modifcation for thymine
+-b [file]   Generate restraints from a ROAD blueprint
+            for use with a Phenix .eff file.
+
+-p [prefix] Add file prefixes and folder suffixes.
+
+-o          Overwrite existing folder contents.
+
+-v          Convert modified nucleotides back to RNA.
+
+-m          Output only the modified PDB file and any
+            generated restraints.
+```
+
+### Applying Modifications
+
+Modifications are specified using the following format:
+
+```text
+-[base_to_replace] [modification_3_letter_code,resid,resid,...]
+```
+
+If no residue IDs are provided, all residues of that base type will be replaced.
+
+```text
+-a [modification,resids]  Set modification for adenine.
+-c [modification,resids]  Set modification for cytosine.
+-g [modification,resids]  Set modification for guanine.
+-u [modification,resids]  Set modification for uracil.
+-t [modification,resids]  Set modification for thymine.
+```
 
 ## Contributing
-1. Create a new branch: `git checkout -b feature-name`.
+
+1. Create a new branch:
+
+```bash
+git checkout -b feature-name
+```
+
 2. Make your changes.
-3. Push your branch: `git push origin feature-name`.
+3. Push your branch:
+
+```bash
+git push origin feature-name
+```
+
 4. Create a pull request.
 
 ## License
-This project is licensed under the [GPL-3.0 license](LICENSE).
+
+This project is licensed under the GPL-3.0 license. See the LICENSE file for details.
